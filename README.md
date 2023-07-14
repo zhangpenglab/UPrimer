@@ -143,7 +143,7 @@ If you encounter difficulties installing UPrimer, it is possible that the includ
 
 The whole workflow of UPrimer comprises two main modules. **The first module (Make_MSAs_suitable_for_primer_design_Part_I.py) aims to obtain candidate MSAs based on the genome data of the target taxon.** The module contains five main steps, and each step corresponds to a script:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/33fa4985-8949-4d07-aae7-f759436d7e5a.png" width="750" height="500"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/1.png" width="750" height="500"/>
 </div>
 
 - Step 1 —— **Identify long and single-copy exons from the genome of a reference species** (Screen_exons_1.py)：The reference species can be any species of the target taxon, but should have well-annotated genome data available. **The input data of this step are exome, proteome, and genome sequences of the reference species.** UPrimer first uses *BLASTX* to trim each exon in the exome to the correct translation frame using the proteome as a guide. Subsequently, it discards exons shorter than a predefined value (default: 300 bp). The program then uses *BLASTN* to search the remaining exons against the genome to remove exons that are not single-copy. The criterion is as followed: if an exon has a second BLAST hit with similarity > 50% and coverage > 30%, this exon is considered to have a similar copy in the genome and is not single-copy.
@@ -161,7 +161,7 @@ The whole workflow of UPrimer comprises two main modules. **The first module (Ma
 
 **The second module (Design_universal_primer_sets_Part_II.py) aims to design universal nested-PCR primer sets of NPCLs based on candidate MSAs**. The workflow of this module is as follows:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/b71269e5-e7a6-4075-ac0a-333c63d09d5e.png" alt="Drawing" />
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/2.png" alt="Drawing" />
 </div>
 
 - Step 1 —— **Search for primer blocks**: For each alignment, UPrimer searches for all conserved primer blocks that are 7 or 8 amino acids in length. The sequence similarity between the conserved primer block within the ingroup and the reference species is required to be at least 85%. The sequence similarity across all species should be at least 75%.
@@ -169,19 +169,19 @@ The whole workflow of UPrimer comprises two main modules. **The first module (Ma
 
 - Step 2 —— **Design forward and reverse primers**: Firstly, UPrimer infers the consensus amino acid for each column within the ingroup species and the reference species using the amino acid primer block. Then, nucleotide alignments are used to obtain the consensus nucleotide sequence. Finally, based on this consensus nucleotide sequence, UPrimer designs both forward and reverse primers.
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/a0211bf3-0cfa-4b82-ae4b-44f924f9c171.png" alt="Drawing" width="500" height="300"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/3.png" alt="Drawing" width="500" height="300"/>
 </div>
 <br /><br />
 
 - Step 3 —— **Match and filter primer pairs**: UPrimer matches all forward and reverse primers to list all possible primer pairs and filters them by primer degeneracy (the overall degeneracy of the nucleotide primers is less than or equal to 8192) and amplification length (300~2100 bp).
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/90ee44b7-f8d4-4706-9ff1-1236ce838874.png" alt="Drawing" width="500" height="500"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/4.png" alt="Drawing" width="500" height="500"/>
 </div>
 <br /><br />
 
 - Step 4 —— **Search for outer forward and reverse primers**: For every retained primer pair, UPrimer searches for their outer forward and reverse primers (if they exist) within a flanking region of 450 bp.
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/f75aaa3c-0a25-4b94-9934-fb02b38db95c.png" alt="Drawing" width="500" height="300"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/5.png" alt="Drawing" width="500" height="300"/>
 </div>
 <br /><br />
 
@@ -192,7 +192,7 @@ The whole workflow of UPrimer comprises two main modules. **The first module (Ma
 
 - Step 7 —— **Calculate a total score for each primer pair and sort them**: UPrimer then calculates a total score for each primer pair, based on a weighting parameter “PIs” (default = 1) of PCR performance score and phylogenetic information score. The formula for calculation is as follows: 
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/7d974cfe-ac8b-42c1-82e1-fee190f7c630.png" alt="Drawing" width="450" height="60"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/6.png" alt="Drawing" width="450" height="60"/>
 </div>
 <br /><br />
 
@@ -209,7 +209,7 @@ The conservation score of amino acid primer blocks is determined by assessing **
 
 ##For example, calculating the conservation score of a 8 amino acid primer block:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/47931f89-753b-4e86-9e37-4a32e836369e.png" alt="Drawing" width="450" height="400"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/7.png" alt="Drawing" width="450" height="400"/>
 </div>  
 <br /><br />
 
@@ -219,7 +219,7 @@ Higher degeneracy of amino acid primer sequences can potentially decrease the bi
 
 ##For example, calculating the degeneracy score of a 8 amino acid primer sequence:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/af147012-d2a7-4923-9f65-7dc13cffa762.png" alt="Drawing" width="610" height="300"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/8.png" alt="Drawing" width="610" height="300"/>
 </div>
 <br /><br />
 
@@ -229,7 +229,7 @@ The complexity of amino acid primer sequences is determined by evaluating the am
 
 ##For example, calculating the complexity score of a 8 amino acid primer sequence:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/2966db01-067e-48b5-bde2-dbebfcfedfb8.png" alt="Drawing" width="500" height="300"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/9.png" alt="Drawing" width="500" height="300"/>
 </div>
 <br /><br />
 
@@ -247,7 +247,7 @@ Where:
 
 ##For example, calualting the phylogenetic information score of all nested primer pairs in the same MSA.
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/fd883cc5-8bb7-46b7-81d2-da8f8882d7cf.png" alt="Drawing" width="800" height="360"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/10.png" alt="Drawing" width="800" height="360"/>
 </div>
 <br /><br />
 
@@ -268,7 +268,7 @@ taxonkit name2taxid Genome_list_only_contain_species_name.txt > Genome_list_Name
 ~~~
 For example:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/6421ffbd-b92a-4c09-ae98-52bfdac0fbf0.png" alt="Drawing" width="650" height="300"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/11.png" alt="Drawing" width="650" height="300"/>
 </div>
 <br /><br />
 
@@ -278,7 +278,7 @@ taxonkit lineage Genome_list_Name_TaxonomyID.txt -i 2 > Genome_list_Name_Taxonom
 ~~~
 For example:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/70be7349-08bf-4ea8-b2d1-1ff34041d856.png" alt="Drawing" width="600" height="300"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/12.png" alt="Drawing" width="600" height="300"/>
 </div>
 <br /><br />
 
@@ -290,7 +290,7 @@ taxonkit reformat Genome_list_Name_TaxonomyID_Lineage.txt -i 3 > Genome_list_Nam
 
 - Finally, the user needs to obtain a genome list like this:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/c609c794-df45-450b-a50b-c61edb9a5db7.png" alt="Drawing" width="800" height="250"/>
+  <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/13.png" alt="Drawing" width="800" height="250"/>
 </div>
 <br /><br />
 
@@ -407,26 +407,26 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
 
 (1) Text file: This file should contain a list of species names, including the names of the reference species, ingroup species and outgroup species.
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/680b6a88-a955-4fa9-8334-a8530bf9743b.png" alt="Drawing" width="460" height="400"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/14.png" alt="Drawing" width="460" height="400"/>
   </div>
 <br /><br />
 
 
 (2) The folder "Reference": it contains the genomic resources of the reference species, consisting of three files: exonome data (reference_name_exon.fasta), genome data (reference_name_genome.fasta), and proteome data (reference_name_pep.fasta).
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/1b0b3504-45d2-431f-b710-b92c5395793c.png" alt="Drawing" width="350" height="110"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/15.png" alt="Drawing" width="350" height="110"/>
   </div>    
 <br /><br />
 
 (3) The folder "Ingroups": it contains the genomic data of all ingroups species. The naming convention for these files is as follows: species_name + _genome.fasta.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/5fbd6303-905b-4ada-bba3-54fc66a0e2bb.png" alt="Drawing" width="420" height="240"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/16.png" alt="Drawing" width="420" height="240"/>
   </div>
 <br /><br />    
 
 (4) The folder "Outgroups": it contains the CDS data of all outgroup species. The naming convention for these files is as follows: species_name + _cds.fasta.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/8eff90ab-9d87-4d85-a99a-f39830a31815.png" alt="Drawing" width="370" height="110"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/17.png" alt="Drawing" width="370" height="110"/>
   </div>
 <br /><br />
 
@@ -434,38 +434,38 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
 # Output
 (1) The candidate nucleotide and peptide MSAs used for primer design can be found in the folder "4.Candidate_nucleotide_iden0.5_MSAs_for_primer_design" and "4.Candidate_peptide_iden0.5_MSAs_for_primer_design".
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/1bffaffb-3530-4876-b752-b9f0efa31b99.png" alt="Drawing" width="800" height="280"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/18.png" alt="Drawing" width="800" height="280"/>
   </div>
 <br /><br />
 
 (2) The final designed NPCL primer sets can be found in the folders "6.Designed_nested-PCR_primer_set_of_NPCLs_PIratio_xxx". In this folder, the user could find three tables:
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/344c4a94-6bf0-48ab-a571-035a36f490f6.png" alt="Drawing" width="750" height="320"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/19.png" alt="Drawing" width="750" height="320"/>
   </div>
 <br /><br />
 
 - **Highest-scoring_nested-PCR_primer_set_PIdXX_numXXX_mlenXXX.xls**: This table presents detailed information for the highest-scoring nested primers obtained from various MSAs, including such as NPCL ID, Target region length, primer sequence, primer position, block identity. It is important to note that the highest-scoring primers for different MSAs have already be sorted based on their total scores (from high to low). Researchers should prioritize using the primer pairs that are ranked higher on the list.
 
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/3b43676a-2b85-41b3-8427-9fd69b0583b2.png" alt="Drawing" width="800" height="310"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/20.png" alt="Drawing" width="800" height="310"/>
   </div>
   <br /><br />
     
 - **Synthezised_highest-scoring_nested-PCR_primer_PIdXXX_numXXX_mlenXXX.xls**: This table is a simplified version of the "Highest-scoring_nested-PCR_primer_set_PIdXX_numXXX_mlenXXX.xls" table, containing only the NPCL ID, nested PCR primer sequences, and primer lengths. It can be directly used for primer synthesis.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/0e74e56e-6145-4fbc-b917-848b0abac124.png" alt="Drawing" width="650" height="550"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/21.png" alt="Drawing" width="650" height="550"/>
   </div>
   <br /><br />
 
 - **Candidate_nested-PCR_primer_set_PIdXXX_numXXX_mlenXXX.xls**: If PCR amplification using the highest-scoring primer pair fails, users can explore other candidate primers listed in the table. Each MSA provides ten candidate nested PCR primer pairs. These candidate primers are sorted based on their total scores, and the author can try them sequentially, one by one, to identify a successful amplification.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/6f66adf3-cba2-4956-a231-e2b31aaab967.png" alt="Drawing" width="800" height="310"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/22.png" alt="Drawing" width="800" height="310"/>
   </div>
   <br /><br />
 
 (3) The reference NPCL nucletide and peptide sequences can be found at the folder **"6.Reference_sequences_for_target_regions"**. These two seqeunce sets will be used in the extraction of orthologous sequence groups from assembled contigs. For detailed information, please refer to [Additional section: Extract orthologous sequence groups from amplicon capture data](#extract-orthologous-sequence-groups-from-amplicon-capture-data)
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/ab4d7038-db68-49e7-be95-3f8d00412105.png" alt="Drawing" width="750" height="400"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/23.png" alt="Drawing" width="750" height="400"/>
   </div>
   <br /><br />
 
@@ -476,7 +476,7 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 
 **Step 1**: Collect available genomic data information for Lepidoptera from the NCBI database (https://www.ncbi.nlm.nih.gov/genome/browse/#!/overview/).
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/6fb8fb14-c7f1-46a3-a7bc-18ae0c7a8a8b.png" alt="Drawing" width="800" height="520"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/24.png" alt="Drawing" width="800" height="520"/>
   </div>
   <br /><br />
 
@@ -485,13 +485,13 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 - Reference: When selecting the reference species, it is advisable to prioritize species with high-quality genome assembly and annotation. In this case, we have chosen the *Bombyx mori* as the reference species.
 - Ingroups: The selection of ingroup species can be based on the **taxonomy information** of available genome resources. Since our goal is to develop NPCL primer pairs for Lepidoptera, we aim to cover a broad representation of the entire order. Therefore, we can choose representative species at the family level to achieve this. In this case, we selected one representative species from each of the 11 families, considering both the quality of genome assembly and annotation.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/c0cb6378-5f37-45a9-9f34-35f394d35c7e.png" alt="Drawing" width="700" height="220"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/24.png" alt="Drawing" width="700" height="220"/>
   </div>
   <br /><br />
 
 - Outgroups: When selecting the outgroup species, we need to review the existing literature to identify the outgroup taxa related to our target group. Then, we search for available genome resources of these outgroup taxa in the NCBI database. Finally, we select species with available CDS data as our outgroup representatives. It is generally sufficient to include 4 to 5 outgroup taxa for our analysis.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/74e4bd1f-9346-405e-a99f-1875d0be1afa.png" alt="Drawing" width="700" height="110"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/26.png" alt="Drawing" width="700" height="110"/>
   </div>
   <br /><br />
 
@@ -502,7 +502,7 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 
 **To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Example.zip"* file, which can be accessed at https://github.com/Lijiaxuan420/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The data files in the Example folder are as shown in the following figure:**
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/64312ff3-4c69-49f0-88cb-817c73f259ce.png" alt="Drawing" width="700" height="560"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/27.png" alt="Drawing" width="700" height="560"/>
   </div>
   <br /><br />
 
@@ -532,26 +532,26 @@ The workflow for amplicon capture data analysis is illustrated in the following 
 To extract target NPCL sequences from the assembled contigs, a specific number of **reference nucleotide and peptide sequences from NPCLs provided by UPrimer** (depending on which NPCLs and how many were captured by the user) can be used as guide sequences. The working principle of this script is roughly as follows: First, **TBLASTN** (e-value < 1e-5, identity > 50%) was performed to identify orthologous contigs based on the reference peptide sequences. Then, a reversed **BLASTN** (e-value < 1e-5, identity > 50%) was performed on the identified orthologous contigs against the reference nucleotide sequence to detect potential chimeras. As the orthologous contigs contained flanking sequences of the target regions, **EXONERATE version 2.4.0**  was employed to identify potential intron-exon boundaries based on the reference protein sequence of each target NPCL. Finally, this script combines all identified orthologous exons from all samples, constructing orthologous sequence groups (OGs) at both the DNA and protein levels.
 
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/30faf5d3-c208-4010-950f-debf0f706226.png" alt="Drawing" width="700" height="400"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/28.png" alt="Drawing" width="700" height="400"/>
   </div>
   <br /><br />
 
 ## Inputs 
 The user should begin by creating a new folder (e.g., Amplicon_capture_data_analysis) and placing the python script inside it. Additionally, the user need to prepare three data folders to store the respective data files. The details are as follows:
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/3f5bc506-34b2-4ae1-8266-db18902f3a9a.png" alt="Drawing" width="500" height="130"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/29.png" alt="Drawing" width="500" height="130"/>
   </div>
 <br /><br />
 
 (1) **The folder "contigs"**: it contains the assembled contigs files for all captured samples. The contigs files should be named according to the following format: 'sampleID.fasta', for example: 'LepSample1.fasta', 'LepSample2.fasta'. Please ensure that the filenames only consist of the sample ID without any additional characters such as "_" or "|".
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/f3aaa631-8a29-40e4-bd14-cb529e8323e9.png" alt="Drawing" width="500" height="400"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/30.png" alt="Drawing" width="500" height="400"/>
   </div>
 <br /><br />
 
 (2) **The folder "reference"**: it contains the reference nucleotide (named "ref_nuc.fasta") and peptide sequence (named "ref_pro.fasta") files for the target capture regions. These two sequence files are subsets of "Reference nucleotide sequences.fasta" and "Reference peptide sequences.fasta" generated by UPrimer. The user can select the target NPCLs from the above two files based on the actual captured region's NPCL ID.
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/cb6fb82f-f477-4387-a49a-06b908880fa4.png" alt="Drawing" width="800" height="350"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/31.png" alt="Drawing" width="800" height="350"/>
   </div>
 <br /><br />
 
@@ -559,14 +559,14 @@ The user should begin by creating a new folder (e.g., Amplicon_capture_data_anal
 (3) **The folder "pep_for_exonerate"**: it contains the reference peptide sequences file for the target capture regions. This file is identical to the reference peptide sequence file in the "reference" folder.
  
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/5be9a180-561a-41c3-bf20-8f3647a3ca80.png" alt="Drawing" width="500" height="380"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/32.png" alt="Drawing" width="500" height="380"/>
   </div>
 <br /><br />  
 
 ## Outputs
 The final orthologous sequence (OG) files can be found in the **'6.Final_seq_for_align'** folder. These files can be used directly for subsequent **sequence alignment and phylogenetic analysis**.
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/9c8fbeff-8d1f-405f-a2b4-7ba1a7ec3387.png" alt="Drawing" width="800" height="250"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/33.png" alt="Drawing" width="800" height="250"/>
   </div>
 <br /><br />
 
@@ -582,7 +582,7 @@ Assuming we captured ***100 NPCLs*** (NPCL ID: Lep1-Lep100) from ***six Lepidopt
 From the *"Reference nucleotide sequences.fasta" and "Reference peptide sequences.fasta"* files outputted by UPrimer, extract the nucleotide sequences and protein sequences corresponding to Lep1~Lep100. Rename the extracted nucleotide sequence file as ***"ref_nuc.fasta"*** and the extracted protein sequence file as ***"ref_pro.fasta"***.
 
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/f3205426-d78d-4068-bfa0-83d5346d7e07.png" alt="Drawing" width="800" height="350"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/34.png" alt="Drawing" width="800" height="350"/>
   </div>
 <br /><br />
 
@@ -596,7 +596,7 @@ Create a new folder named "Lep_amplicon_data_analysis". Within this folder, crea
 - Additionally, the script 'Extract_orthologous_sequence_groups_from_assembled_contigs.py' for extracting OGs should also be placed within the "Lep_amplicon_data_analysis" folder.
 
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/fdc021ac-3f85-4a34-811c-23c3a0273e0a.png" alt="Drawing" width="500" height="320"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Pictures/35.png" alt="Drawing" width="500" height="320"/>
   </div>
 <br /><br />
 
