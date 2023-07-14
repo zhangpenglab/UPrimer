@@ -412,23 +412,24 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
 <br /><br />
 
 
-(2) The folder "Reference": it contains the genomic resources of the reference species, consisting of three files: exonome data (reference_name_exon.fasta), genome data (reference_name_genome.fasta), and proteome data (reference_name_pep.fasta).
+(2) The folder "Reference": it contains the genomic resources of the reference species, consisting of three files: exonome data (reference_name_exon.fasta), genome data (reference_name_genome.fasta), and proteome data (reference_name_pep.fasta). The FASTA file format is illustrated in the figure below.
   <div align="center">
-    <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/efd73dd3-803d-4b6d-af54-7d1c69bfa85a" alt="Drawing" width="350" height="110"/>
+    <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/aeab7ec7-f34d-4c7a-b748-2b54847eba90" alt="Drawing" width="600" height="500"/>
   </div>    
 <br /><br />
 
-(3) The folder "Ingroups": it contains the genomic data of all ingroups species. The naming convention for these files is as follows: species_name + _genome.fasta.
+(3) The folder "Ingroups": it contains the genomic data of all ingroups species. The naming convention for these files is as follows: species_name + _genome.fasta. The FASTA file format is illustrated in the figure below.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/28f8bb28-c120-4c43-8f52-4fdad0de9316" alt="Drawing" width="420" height="240"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/af107dde-10ef-48d9-bb96-9d3ce19a88eb" alt="Drawing" width="460" height="550"/>
   </div>
 <br /><br />    
 
-(4) The folder "Outgroups": it contains the CDS data of all outgroup species. The naming convention for these files is as follows: species_name + _cds.fasta.
+(4) The folder "Outgroups": it contains the CDS data of all outgroup species. The naming convention for these files is as follows: species_name + _cds.fasta. The FASTA file format is illustrated in the figure below.
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/efb4020c-1ff3-450d-8f6a-a5dcb6560696" alt="Drawing" width="370" height="110"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/e0a2c8de-636b-44ac-bc66-512a474968f3" alt="Drawing" width="800" height="600"/>
   </div>
 <br /><br />
+
 
 
 # Output
@@ -500,17 +501,17 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 
 **Step 4**: Prepare UPrimer input files (see [Input](#input)). We need to start by creating a new folder, which can be named "Lepidoptera_NPCL_primer_development." Inside this new folder, we should place the UPrimer program package. Then, we need to prepare a text file and three data folders. The text file contains the species names of the reference, ingroup, and outgroup species. Its purpose is to inform UPrimer about the selected reference, ingroup, and outgroup species. The three data folders correspond to "Reference," "Ingroups," and "Outgroups," respectively. We need to place the corresponding resources in these folders. Pay attention to the naming conventions of the files. In the text file, only the species names are displayed, with spaces replaced by underscores. In the folders, file names include additional data attributes such as "_exon", "_pep", "_genome", and "_cds". 
 
-**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Example.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The data files in the Example folder are as shown in the following figure:**
+**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The data files in the Example folder are as shown in the following figure:**
   <div align="center">
-     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/5a5e95c2-e303-4a4f-9e77-2280bd0163b7" alt="Drawing" width="900" height="700"/>
+     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/9317f324-2cee-4941-8dc0-2233f22e82aa" alt="Drawing" width="900" height="700"/>
   </div>
   <br /><br />
 
-**Step 5**: Run UPrimer. The user can download the Example.zip file and run these command lines are as follows:
+**Step 5**: Run UPrimer. The user can download the Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip file and run these command lines are as follows:
 ~~~
 conda activate UPrimer
 cd /path/to/UPrimer
-unzip Example.zip
+unzip Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip
 cd /path/to/Example/Lepidoptera_NPCL_primer_development/UPrimer
 python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
 ~~~
