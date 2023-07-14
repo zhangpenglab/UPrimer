@@ -1,0 +1,14 @@
+# USAGE: conda env create -f UPrimer-conda-env.yml
+name: UPrimer
+channels:
+- bioconda
+- conda-forge
+- defaults
+- cctbx201909
+dependencies:
+- python=2.7.15
+- biopython=1.74
+- blast=2.12.0
+- pandas=0.24.2
+- pal2nal
+- exonerate
