@@ -145,7 +145,7 @@ The whole workflow of UPrimer comprises two main modules. **The first module (Ma
 <div align="center">
   <img src="https://github.com/zhangpenglab/UPrimer/edit/main/Pictures/1.png" width="750" height="500"/>
 </div>
-
+![image](https://github.com/zhangpenglab/UPrimer/edit/main/Pictures/1.png)
 
 - Step 1 —— **Identify long and single-copy exons from the genome of a reference species** (Screen_exons_1.py)：The reference species can be any species of the target taxon, but should have well-annotated genome data available. **The input data of this step are exome, proteome, and genome sequences of the reference species.** UPrimer first uses *BLASTX* to trim each exon in the exome to the correct translation frame using the proteome as a guide. Subsequently, it discards exons shorter than a predefined value (default: 300 bp). The program then uses *BLASTN* to search the remaining exons against the genome to remove exons that are not single-copy. The criterion is as followed: if an exon has a second BLAST hit with similarity > 50% and coverage > 30%, this exon is considered to have a similar copy in the genome and is not single-copy.
 <br /><br />
