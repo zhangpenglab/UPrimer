@@ -42,7 +42,7 @@ Jiaxuan Li, Guangcheng Han, Xiao Tian, Dan Liang*, Peng Zhang*<br>
 - Pandas == 0.24.2
 - Numpy == 1.16.6
 - BLAST+ version 2.12.0 
-- MEGA-CC version 10.18 (https://github.com/Lijiaxuan420/UPrimer/tree/main/Accessory/megacc_10.1.8_amd64.tar.gz)
+- MEGA-CC version 10.18 (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/megacc_10.1.8_amd64.tar.gz)
 - PAL2NAL version 14
 - Exonerate version 2.4.0 #This software will be used for subsequent capture data analysis.
 
@@ -53,7 +53,7 @@ Before installing, you should to download and install the software Miniconda (ht
 
 (1) Download the UPrimer package.
 ~~~
-git clone https://github.com/Lijiaxuan420/UPrimer.git 
+git clone https://github.com/zhangpenglab/UPrimer.git 
 ~~~
 
 (2) Install python, biopython, BLAST+, pandas, pal2nal and exonerate through conda.
@@ -318,7 +318,7 @@ ncbi-genome-download all --section refseq --formats genbank -A GCF_014905235.1 -
 ~~~
 
 (2) Extract exome data from the genome annotation GB file for the referecne sepecies *Bombyx mori*:
-**CAUSION**: the exome of the reference can not be directly downloaded through the ncbi-genome-download tool, so we need to use a custome script named **Extract_exome_from_genbank_file.py** (https://github.com/Lijiaxuan420/UPrimer/tree/main/Accessory) to extract exome data from the annotation GB file. Commands as below: 
+**CAUSION**: the exome of the reference can not be directly downloaded through the ncbi-genome-download tool, so we need to use a custome script named **Extract_exome_from_genbank_file.py** (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) to extract exome data from the annotation GB file. Commands as below: 
 
 ~~~
 cp /path/to/UPrimer/Accessory/Extract_exome_from_genbank_file.py /path/to/Reference
@@ -500,7 +500,7 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 
 **Step 4**: Prepare UPrimer input files (see [Input](#input)). We need to start by creating a new folder, which can be named "Lepidoptera_NPCL_primer_development." Inside this new folder, we should place the UPrimer program package. Then, we need to prepare a text file and three data folders. The text file contains the species names of the reference, ingroup, and outgroup species. Its purpose is to inform UPrimer about the selected reference, ingroup, and outgroup species. The three data folders correspond to "Reference," "Ingroups," and "Outgroups," respectively. We need to place the corresponding resources in these folders. Pay attention to the naming conventions of the files. In the text file, only the species names are displayed, with spaces replaced by underscores. In the folders, file names include additional data attributes such as "_exon", "_pep", "_genome", and "_cds". 
 
-**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Example.zip"* file, which can be accessed at https://github.com/Lijiaxuan420/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The data files in the Example folder are as shown in the following figure:**
+**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Example.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The data files in the Example folder are as shown in the following figure:**
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/5a5e95c2-e303-4a4f-9e77-2280bd0163b7" alt="Drawing" width="900" height="700"/>
   </div>
@@ -518,7 +518,7 @@ python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 
 **Step 6**: Review and collect the results of the NPCL nested PCR primer design conducted by UPrimer. The final NPCL primer sets can be found at the folder 6.Designed_nested-PCR_primer_set_of_NPCLs_PIratio_3". The reference nucleotide and peptide sequences cam be found at the folder "6.Reference_sequences_for_target_regions".
 <br /><br />
 
-**####After the NPCL primer development work is completed, the user can use the primer information to collect amplicons, prepare probes, and conduct sequence capture experiments. The detailed experimental process can be found in the *"Protocol for Amplicon capture.pdf"* (https://github.com/Lijiaxuan420/UPrimer/tree/main/Accessory)**
+**####After the NPCL primer development work is completed, the user can use the primer information to collect amplicons, prepare probes, and conduct sequence capture experiments. The detailed experimental process can be found in the *"Protocol for Amplicon capture.pdf"* (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory)**
 <br /><br />
 <div class="page-break"></div>
 <br /><br />
@@ -527,7 +527,7 @@ python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 
 
 # Extract orthologous sequence groups from assembled contigs 
 
-The workflow for amplicon capture data analysis is illustrated in the following diagram, consisting of four main steps: 1) Capture data assembly, 2) Identification of orthologous sequence groups, 3) Multiple sequence alignment and quality control, and 4) Phylogenetic analysis. Among these four steps, the extraction of orthologous sequence groups is crucial and lacks a universal program or software. Therefore, we provide a data analysis script called **'Extract_orthologous_sequence_groups_from_assembled_contigs.py'** (available at https://github.com/Lijiaxuan420/UPrimer/tree/main/Accessory) specifically designed to extract orthologous sequence groups from assembled contigs. 
+The workflow for amplicon capture data analysis is illustrated in the following diagram, consisting of four main steps: 1) Capture data assembly, 2) Identification of orthologous sequence groups, 3) Multiple sequence alignment and quality control, and 4) Phylogenetic analysis. Among these four steps, the extraction of orthologous sequence groups is crucial and lacks a universal program or software. Therefore, we provide a data analysis script called **'Extract_orthologous_sequence_groups_from_assembled_contigs.py'** (available at https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) specifically designed to extract orthologous sequence groups from assembled contigs. 
 
 To extract target NPCL sequences from the assembled contigs, a specific number of **reference nucleotide and peptide sequences from NPCLs provided by UPrimer** (depending on which NPCLs and how many were captured by the user) can be used as guide sequences. The working principle of this script is roughly as follows: First, **TBLASTN** (e-value < 1e-5, identity > 50%) was performed to identify orthologous contigs based on the reference peptide sequences. Then, a reversed **BLASTN** (e-value < 1e-5, identity > 50%) was performed on the identified orthologous contigs against the reference nucleotide sequence to detect potential chimeras. As the orthologous contigs contained flanking sequences of the target regions, **EXONERATE version 2.4.0**  was employed to identify potential intron-exon boundaries based on the reference protein sequence of each target NPCL. Finally, this script combines all identified orthologous exons from all samples, constructing orthologous sequence groups (OGs) at both the DNA and protein levels.
 
@@ -573,7 +573,7 @@ The final orthologous sequence (OG) files can be found in the **'6.Final_seq_for
 
 ## A step-by-step instruction for extracting OGs from contigs - taking Lepidoptera as an example
 
-######To facilitate the user in quickly understanding the usage and processing flow of the script, we provide test data for the following example, which can be found in https://github.com/Lijiaxuan420/UPrimer/tree/main/Accessory/Test_data_for_extracting_OGs_from_assembled_contigs.zip
+######To facilitate the user in quickly understanding the usage and processing flow of the script, we provide test data for the following example, which can be found in https://github.com/zhangpenglab/UPrimer/tree/main/Accessory/Test_data_for_extracting_OGs_from_assembled_contigs.zip
 <br /><br />
 
 Assuming we captured ***100 NPCLs*** (NPCL ID: Lep1-Lep100) from ***six Lepidoptera samples*** (sample ID: LepSample1-LepSample6), and we have obtained the contigs (in our case, these contigs were assembled using **metaSPAdes**, detailed methods can be found in our paper) for these six samples. The process of extracting orthologous sequence groups from these assembled contigs is as follows:
