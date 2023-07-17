@@ -160,7 +160,7 @@ The whole workflow of UPrimer comprises two main modules. **The first module (Ma
 
 **The second module (Design_universal_primer_sets_Part_II.py) aims to design universal nested-PCR primer sets of NPCLs based on candidate MSAs**. The workflow of this module is as follows:
 <div align="center">
-  <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/1240fd1a-52ab-4f72-88ae-68fa093e6a86" alt="Drawing" />
+  <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/ed0bd537-1610-4564-9e33-7dc4976f7d01" alt="Drawing" />
 </div>
 <br /><br />
 
