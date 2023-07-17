@@ -307,9 +307,10 @@ taxonkit reformat Genome_list_Name_TaxonomyID_Lineage.txt -i 3 > Genome_list_Nam
 ## Download data
 If the genomic resources of the target group meet the requirements of UPrimer, we strongly recommend using **the ncbi-genome-download tool** (https://github.com/kblin/ncbi-genome-download) to download all used genome data (**FASTA-formatted**), because this tool allows for efficient bulk downloading of genome data at a high speed.
 
+
 For example, if we want to download genome data for the order Lepidoptera:
 
-(1) Download genome, proteome, and genome annotation GB files based on the accession numbers of the reference species *Bombyx mori*:
+(1) Download genome, proteome, and genome annotation GB files based on the accession numbers of the reference species *Bombyx mori* (GCF_014905235.1):
 
 ~~~
 ncbi-genome-download all --section refseq --formats fasta -A GCF_014905235.1 --flat-output -o /path/to/Reference -r 100
@@ -328,7 +329,13 @@ cp GCF_014905235.1_Bmori_2016v1.0_genomic.gbff ./gbff
 python Extract_exome_from_genbank_file.py
 ~~~
 
-(3) Download genome sequence data based on the accession numbers of the ingroup species *Plutella xylostella* and *Aricia agestis*:
+The extracted exon FASTA file of the reference species *Bombyx mori* is like this:
+  <div align="center">
+    <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/349cb677-4a7c-4e4e-81c9-a0a3330c2952" alt="Drawing" width="780" height="400"/>
+  </div>    
+<br /><br />
+
+(3) Download genome sequence data based on the accession numbers of the ingroup species *Plutella xylostella* (GCA_932276165.1) and *Aricia agestis* (GCA_905147365.1):
 
 ~~~
 ncbi-genome-download all --section refseq --formats fasta -A GCA_932276165.1 --flat-output -o /path/to/Ingroups -r 100
@@ -336,12 +343,14 @@ ncbi-genome-download all --section refseq --formats fasta -A GCA_905147365.1 --f
 ~~~
 
 
-(4) Download CDS data based on the accession numbers of the related outgroup species *Bombus terrestris* (Hymenoptera, Apidae) and *Tribolium castaneum* (Coleoptera, Tenebrionidae):
+(4) Download CDS data based on the accession numbers of the related outgroup species *Bombus terrestris* (Hymenoptera, Apidae) (GCF_014905235.1) and *Tribolium castaneum* (Coleoptera, Tenebrionidae) (GCF_000002335.3):
 ~~~
 ncbi-genome-download all --section genbank --formats cds-fasta -A GCF_014905235.1 --flat-output -o /path/to/Outgroups -r 100
 ncbi-genome-download all --section genbank --formats cds-fasta -A GCF_000002335.3 --flat-output -o /path/to/Outgroups -r 100
 ...
 ~~~
+
+***###NOTE：After completing the download of genome data through the NCBI genome database, users only need to unzip all files and rename them according to UPrimer's requirements (see [Input](#input)). There is no need to modify the sequence ID or description information. Please pay attention to this point.***
 
 ---
 
@@ -353,49 +362,51 @@ Usage :
 python UPrimer.py --help
 
 Required parameters：
-  --file SRT :A text table containing a list of species names for the reference, ingroups and outgroups (filename: 'species_list.txt') [short: -F]
-  --ConsiderOutgroups 0|1 :Whether outgroups are considered when designing universal primers. 0: Do not consider. 1: Consider [short: -CO]
-  --TaxaGroup SRT :Name of the target group (for example: Vertebrata, Bivalvia) [short: -TG]  
+  --file SRT :Input a text file containing a list of species names for the reference, ingroup, and outgroup species (filename: 'species_list.txt') [short: -F]
+  --ConsiderOutgroups 0|1 :Whether to consider outgroup species when designing NPCL primers (0: Do not consider. 1: Consider) [short: -CO]
+  --TaxaGroup SRT :Input the name of the target taxon for NPCL primer development (for example: Lepidoptera, Vertebrata, Bivalvia) [short: -TG]  
 
 Optioinal parameters：
-  --len INT : The length cutoff for reference exons (DEFAULT: 300) [short: -L]
-  --thd INT : Number of threads when running BLAST (DEFAULT: 10) [short: -T]
-  --cov FLOAT : Single-copy exon selection criteria: The length coverage between exon and its hit seq (DEFAULT: 0.3) [short: -C]
-  --sim FLOAT : Single-copy exon selection criteria: The similarity between exon and its hit seq (DEFAULT: 0.5) [short: -S]
-  --SelectScale INT : Value of a criteria used in removing rogue sequences, larger and more strict. This parameter usually does not need to be adjusted (DEFAULT: 1.1)[short: -SS]
-  --RemoveRigor INT : Value of a sequence identity cutoff used in removing rogue sequences from MSAs. Set this parameter based on the quality of genome data. Larger value is suitbale for high quality genome data (50 or 55), lower value is suitbale for low quality genome data (30 or 35) (DEFAULT: 55) [short: -RR]
-  --exp FLOAT : Value of the expect identity of all species in 7AA/8AA blocks (DEFAULT: 0.5) [short: -E]
-  --outgroupNum INT : The minimal number of outgroups (DEFAULT: 1) [short: -ON]
-  --ingroupNum INT : The minimal number of ingroups (DEFAULT: 1) [short: -IN]
-  --totaltaxanum INT : The minimal number of all species (DEFAULT: 3) [short: -TN]
+  --len INT : The length cutoff for exons of the reference species (DEFAULT: 300) [short: -L]
+  --thd INT : The number of threads to use when running BLAST (DEFAULT: 10) [short: -T]
+  --cov FLOAT : Single-copy exon selection criteria: The length coverage between exons and their second-hit sequences (DEFAULT: 0.3) [short: -C]
+  --sim FLOAT : Single-copy exon selection criteria: The similarity between exons and their second-hit sequences (DEFAULT: 0.5) [short: -S]
+  --SelectScale INT : The value of a criteria used in removing rogue sequences, which is typically larger and more strict. This parameter usually does not need to be adjusted (DEFAULT: 1.1)[short: -SS]
+  --RemoveRigor INT : The value of a sequence identity cutoff used in removing rogue sequences from MSAs. Set this parameter based on the quality of genome data. A larger value (e.g., 50 or 55) is suitable for high-quality genome data, while a lower value (e.g., 30 or 35) is suitable for low-quality genome data (DEFAULT: 55) [short: -RR]
+  --exp FLOAT : The value of the expected identity of all species in 7AA/8AA primer blocks (DEFAULT: 0.5) [short: -E]
+  --outgroupNum INT : The minimum number of outgroup species (DEFAULT: 1) [short: -ON]
+  --ingroupNum INT : The minimum number of ingroup species (DEFAULT: 1) [short: -IN]
+  --totaltaxanum INT : The minimum number of all species (DEFAULT: 3) [short: -TN]
   --tril INT : The permissible length cutoff of amino acid during trimming sequences. This parameter usually does not need to be adjusted (DEFAULT: 10) [short: -l]
-  --trit FLOAT : The ratio of gap length and AA length during trimming sequences. This parameter usually does not need to be adjusted (DEFAULT: 1.5) [short: -t]
-  --con FLOAT : The conservation/identitfy of MSAs. If similarity of one MSA is larger than this value, UPrimer will not design primer for it (DEFAULT: 0.9) [short: -C]
-  --PIs INT : The weighting ratio of PCR score and Information score when scoring all possible nested-PCR primers within the same MSA. Increasing this value will reduce the length of the amplified regions. Please set this parameter with caution. (DEFAULT: 1) [short: -PIs]
-  --fwd INT : The length of amino acid between outer primer F1 and inner primer F2. This parameter usually does not need to be adjusted (DEFAULT: 150) [short: -W]
-  --rvs INT : The length of amino acid between outer primer R1 and inner primer R2. This parameter usually does not need to be adjusted (DEFAULT: 150) [short: -R]
-  --max INT : The maximal length of target amplicons (amino acid length, from F2 to R2) (DEFAULT: 700) [short: -M]
-  --min INT : The minimal length of target amplicons (amino acid length, from F2 to R2) (DEFAULT: 100) [short: -N]
-  --all INT : The maximal degeneracy level of primers. This parameter usually does not need to be adjusted (DEFAULT: 8192) [short: -A]
-  --inthred2 FLOAT : The mean identity of ingroups (including reference species) in 7AA/8AA F2R2 primer blocks (DEFAULT: 0.85) [short: -IT2]
-  --allthred2 FLOAT : The mean identity of all species in 7AA/8AA F2R2 primer blocks (DEFAULT: 0.75) [short: -AT2]
-  --inthred1 FLOAT : The mean identity of ingroups (including reference species) in 7AA/8AA F1R1 primer blocks (DEFAULT: 0.80) [short: -IT1]
-  --allthred1 FLOAT : The mean identity of all species in 7AA/8AA F1R1 primer blocks (DEFAULT: 0.70) [short: -AT1]
-  --PId INT : The weighting ratio of PCR score and Information score when scoring highest-scoring nested-PCR primers derived from different MSAs (DEFAULT: 1) [short: -PId]
+  --trit FLOAT : The ratio of gap length to AA length during trimming sequences. This parameter usually does not need to be adjusted (DEFAULT: 1.5) [short: -t]
+  --con FLOAT : The overall conservation/identity of MSAs. If the overall similarity of one MSA is larger than this value, UPrimer will not design primers for it because the MSA is too conserved (DEFAULT: 0.9) [short: -C]
+  --PIs INT : The weighting ratio of PCR performance score and phylogenetic information score when scoring all possible nested-PCR primers within the same MSA. Increasing this value will reduce the length of the amplified regions. Please set this parameter with caution (DEFAULT: 1) [short: -PIs]
+  --fwd INT : The length of amino acid between the outer primer F1 and the inner primer F2. This parameter usually does not need to be adjusted (DEFAULT: 150) [short: -W]
+  --rvs INT : The length of amino acid between the outer primer R1 and the inner primer R2. This parameter usually does not need to be adjusted (DEFAULT: 150) [short: -R]
+  --max INT : The maximum length of target NPCLs (amino acid length, from F2 to R2) (DEFAULT: 700) [short: -M]
+  --min INT : The minimum length of target NPCLs (amino acid length, from F2 to R2) (DEFAULT: 100) [short: -N]
+  --all INT : The upper threshold for the degeneracy of the entire nucleotide primer sequences. This parameter usually does not need to be adjusted (DEFAULT: 8192) [short: -A]
+  --inthred2 FLOAT : The mean identity of the reference species and all ingroups in 7AA/8AA inner (F2 and R2) primer blocks (DEFAULT: 0.85) [short: -IT2]
+  --allthred2 FLOAT : The mean identity of all species in 7AA/8AA inner (F2 and R2) primer blocks (DEFAULT: 0.75) [short: -AT2]
+  --inthred1 FLOAT : The mean identity of the reference species and all ingroups in 7AA/8AA outer (F1 and R1) primer blocks (DEFAULT: 0.80) [short: -IT1]
+  --allthred1 FLOAT : The mean identity of all species in 7AA/8AA outer (F1 and R1) primer blocks (DEFAULT: 0.70) [short: -AT1]
+  --PId INT : The weighting ratio of PCR performance score and phylogenetic information score when scoring highest-scoring nested-PCR primers derived from different MSAs (DEFAULT: 1) [short: -PId]
 
-Example for developing universal primers for the target group at a order or class level:
+Here are some examples of how to develop nested-PCR primers for NPCLs using UPrimer:
+
+(1) Developing nested-PCR primers for NPCLs for the target taxon at an order or class level:
 python UPrimer.py -F species_list.txt -CO 1 -TG TargetGroupName -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
 
-Example for developing universal primers for the target group at a subphylum or phylum level:
+(2) Developing nested-PCR primers for NPCLs for the target taxon at a subphylum or phylum level:
 python UPrimer.py -F species_list.txt -CO 0 -TG TargetGroupName -IT2 0.90 -AT2 0.90 -IT1 0.90 -AT1 0.90 -PId 5
 
-Example for developing universal primers for the target group whose quality of genome data is relative low:
+(3) Developing nested-PCR primers for NPCLs for the target taxon with relatively low-quality genome data:
 python UPrimer.py -F species_list.txt -CO 1 -TG TargetGroupName -RR 30 -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
 
-Example for running the module of obtaining candidate MSAs from genome data:
+(4) Only running the module of obtaining candidate MSAs from genome data of the target taxon:
 python Make_MSAs_suitable_for_primer_design_Part_I.py -F species_list.txt 
 
-Example for running the module of designing universal primers based on candidate MSAs:
+(5) Only running the module of designing NPCL primers based on candidate MSAs:
 python Design_universal_primer_sets_Part_II.py -F species_list.txt -D 4.Candidate_peptide_iden0.5_MSAs_for_primer_design -TG TargetGroupName -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
 ~~~
 <br /><br />
@@ -405,26 +416,26 @@ python Design_universal_primer_sets_Part_II.py -F species_list.txt -D 4.Candidat
 The user should begin by creating a new folder (e.g., XXX_universal_primer_development) and placing the UPrimer program package inside it. Additionally, the user need to prepare a text file and three data folders to store the respective data files. The details are as follows:
 
 
-(1) Text file: This file should contain a list of species names, including the names of the reference species, ingroup species and outgroup species.
+(1) A text file (***"species_list.txt"***): This file should contain a list of species names, including the names of the reference species, ingroup species and outgroup species.
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/b6201808-791f-408c-b8d7-7fc3b425126a" alt="Drawing" width="460" height="400"/>
   </div>
 <br /><br />
 
 
-(2) The folder "Reference": it contains the genomic resources of the reference species, consisting of three files: exonome data (reference_name_exon.fasta), genome data (reference_name_genome.fasta), and proteome data (reference_name_pep.fasta). The FASTA file format is illustrated in the figure below.
+(2) The folder ***"Reference"***: This folder contains exonome data (reference_name_exon.fasta), genome data (reference_name_genome.fasta), and proteome data (reference_name_pep.fasta) of the reference species. The FASTA file format is illustrated in the figure below.
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/aeab7ec7-f34d-4c7a-b748-2b54847eba90" alt="Drawing" width="600" height="500"/>
   </div>    
 <br /><br />
 
-(3) The folder "Ingroups": it contains the genomic data of all ingroups species. The naming convention for these files is as follows: species_name + _genome.fasta. The FASTA file format is illustrated in the figure below.
+(3) The folder ***"Ingroups"***: This folder contains the genome data of all ingroup species. The naming convention for these files is as follows: species_name + _genome.fasta. The FASTA file format is illustrated in the figure below.
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/af107dde-10ef-48d9-bb96-9d3ce19a88eb" alt="Drawing" width="460" height="550"/>
   </div>
 <br /><br />    
 
-(4) The folder "Outgroups": it contains the CDS data of all outgroup species. The naming convention for these files is as follows: species_name + _cds.fasta. The FASTA file format is illustrated in the figure below.
+(4) The folder ***"Outgroups"***: This folder contains the CDS data of all outgroup species. The naming convention for these files is as follows: species_name + _cds.fasta. The FASTA file format is illustrated in the figure below.
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/e0a2c8de-636b-44ac-bc66-512a474968f3" alt="Drawing" width="800" height="600"/>
   </div>
@@ -433,7 +444,7 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
 
 
 # Output
-(1) The candidate nucleotide and peptide MSAs used for primer design can be found in the folder "4.Candidate_nucleotide_iden0.5_MSAs_for_primer_design" and "4.Candidate_peptide_iden0.5_MSAs_for_primer_design".
+(1) The candidate nucleotide and peptide MSAs used for primer design can be found in the folder "4.Candidate_nucleotide_iden0.5_MSAs_for_primer_design"*** and ***"4.Candidate_peptide_iden0.5_MSAs_for_primer_design".
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/004236aa-d2f4-429a-b864-96b66971583f" alt="Drawing" width="800" height="280"/>
   </div>
@@ -445,7 +456,7 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
   </div>
 <br /><br />
 
-- **Highest-scoring_nested-PCR_primer_set_PIdXX_numXXX_mlenXXX.xls**: This table presents detailed information for the highest-scoring nested primers obtained from various MSAs, including such as NPCL ID, Target region length, primer sequence, primer position, block identity. It is important to note that the highest-scoring primers for different MSAs have already be sorted based on their total scores (from high to low). Researchers should prioritize using the primer pairs that are ranked higher on the list.
+- **Highest-scoring_nested-PCR_primer_set_PIdXX_numXXX_mlenXXX.xls**: This table presents detailed information for the highest-scoring nested primers obtained from various MSAs, including such as NPCL ID, Target region length, primer sequence, primer position, primer block identity. It is important to note that the highest-scoring primers for different MSAs have already be sorted based on their total scores (from high to low). Researchers should prioritize using the primer pairs that are ranked higher on the list.
 
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/9b96714d-860c-4a8b-bb32-857ec5a701af" alt="Drawing" width="800" height="310"/>
@@ -464,7 +475,7 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
   </div>
   <br /><br />
 
-(3) The reference NPCL nucletide and peptide sequences can be found at the folder **"6.Reference_sequences_for_target_regions"**. These two seqeunce sets will be used in the extraction of orthologous sequence groups from assembled contigs. For detailed information, please refer to [Additional section: Extract orthologous sequence groups from amplicon capture data](#extract-orthologous-sequence-groups-from-amplicon-capture-data)
+(3) The reference NPCL nucletide and peptide sequences can be found in the folder **"6.Reference_sequences_for_target_regions"**. These two seqeunce files will be used in the extraction of orthologous sequence groups from assembled contigs. For detailed information, please refer to [##A part of analyzing amplicon capture data: Extract orthologous sequence groups from assembled contigs](#extract-orthologous-sequence-groups-from-assembled-contigs)
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/7cd18bd9-731a-4af4-b3a2-ca58a9d0f409" alt="Drawing" width="750" height="400"/>
   </div>
@@ -496,18 +507,20 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
   </div>
   <br /><br />
 
-**Step 3**: Download the genome data in FASTA format for NPCL primer development (see [Download data](#download-data)). For the reference species, we need to download the proteome, exonome, and genome data for *Bombyx mori*. For the 11 ingroup species, we need to download the genome data. And for the outgroup species, we need to download the CDS data. It should be noted that the downloaded genome data from the NCBI database does not require any additional processing, except for modifying the file names (see step 4). 
+**Step 3**: Download the genome data in FASTA format for NPCL primer development (see [Download data](#download-data)). For the reference species, we need to download the proteome, exonome, and genome data for *Bombyx mori*. For the 11 ingroup species, we need to download the genome data. And for the outgroup species, we need to download the CDS data. ***It should be noted that the downloaded genome data from the NCBI database does not require any additional processing, except for modifying the file names (see step 4)***. 
+<br /><br />
 
+**Step 4**: Prepare UPrimer input files (see [Input](#input)). We need to start by creating a new folder, which can be named "Lepidoptera_NPCL_primer_development." Inside this new folder, we should first place the UPrimer program package. Then, we need to prepare a text file. The text file should be named "species_list.txt", and it should contain the species names of the reference, ingroup, and outgroup species. Its purpose is to ask UPrimer about the selected reference, ingroup, and outgroup species. In this text table, only species names are displayed, and spaces in the names are replaced with underscores. Finally, we need to prepare three folders, named "Reference," "Ingroups," and "Outgroups". The "Reference" folder contains exonome, genome, and proteome data of the reference species. The "Ingroups" folder contains genome data of all ingroup species and the "Outgroups" folder contains CDS data of all outgroup species. The FASTA data of all species in these three folders need to be labeled with the suffixes "_exon," "_pep," "_genome," and "_cds" to indicate their respective types. 
+<br /><br />
 
-**Step 4**: Prepare UPrimer input files (see [Input](#input)). We need to start by creating a new folder, which can be named "Lepidoptera_NPCL_primer_development." Inside this new folder, we should place the UPrimer program package. Then, we need to prepare a text file and three data folders. The text file contains the species names of the reference, ingroup, and outgroup species. Its purpose is to inform UPrimer about the selected reference, ingroup, and outgroup species. The three data folders correspond to "Reference," "Ingroups," and "Outgroups," respectively. We need to place the corresponding resources in these folders. Pay attention to the naming conventions of the files. In the text file, only the species names are displayed, with spaces replaced by underscores. In the folders, file names include additional data attributes such as "_exon", "_pep", "_genome", and "_cds". 
-
-**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The data files in the Example folder are as shown in the following figure:**
+**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The test data files are as shown in the following figure:**
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/9317f324-2cee-4941-8dc0-2233f22e82aa" alt="Drawing" width="900" height="700"/>
   </div>
   <br /><br />
 
-**Step 5**: Run UPrimer. The user can download the Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip file and run these command lines are as follows:
+**Step 5**: Run UPrimer. The file "Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip" can be found in the UPrimer program package. Please run the following command：
+
 ~~~
 conda activate UPrimer
 cd /path/to/UPrimer
@@ -515,8 +528,9 @@ unzip Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip
 cd /path/to/Example/Lepidoptera_NPCL_primer_development/UPrimer
 python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
 ~~~
+<br /><br />
 
-**Step 6**: Review and collect the results of the NPCL nested PCR primer design conducted by UPrimer. The final NPCL primer sets can be found at the folder 6.Designed_nested-PCR_primer_set_of_NPCLs_PIratio_3". The reference nucleotide and peptide sequences cam be found at the folder "6.Reference_sequences_for_target_regions".
+**Step 6**: Review and collect the results of the NPCL nested-PCR primer design conducted by UPrimer. The final NPCL primers of the order Lepidoptera can be found in the folder "6.Designed_nested-PCR_primer_set_of_NPCLs_PIratio_3". The reference NPCL nucleotide and peptide sequences can be found in the folder "6.Reference_sequences_for_target_regions".
 <br /><br />
 
 **####After the NPCL primer development work is completed, the user can use the primer information to collect amplicons, prepare probes, and conduct sequence capture experiments. The detailed experimental process can be found in the *"Protocol for Amplicon capture.pdf"* (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory)**
@@ -528,9 +542,9 @@ python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 
 
 # Extract orthologous sequence groups from assembled contigs 
 
-The workflow for amplicon capture data analysis is illustrated in the following diagram, consisting of four main steps: 1) Capture data assembly, 2) Identification of orthologous sequence groups, 3) Multiple sequence alignment and quality control, and 4) Phylogenetic analysis. Among these four steps, the extraction of orthologous sequence groups is crucial and lacks a universal program or software. Therefore, we provide a data analysis script called **'Extract_orthologous_sequence_groups_from_assembled_contigs.py'** (available at https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) specifically designed to extract orthologous sequence groups from assembled contigs. 
+The workflow for amplicon capture data analysis is illustrated in the following figure, consisting of four main steps: 1) Capture data assembly; 2) Identification of orthologous sequence groups; 3) Multiple sequence alignment and quality control; 4) Phylogenetic analysis. Among these four steps, the extraction of orthologous sequence groups is crucial and lacks a universal program or software. Therefore, we provide a data analysis script called **'Extract_orthologous_sequence_groups_from_assembled_contigs.py'** (available at https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) specifically designed to extract orthologous sequence groups from assembled contigs. 
 
-To extract target NPCL sequences from the assembled contigs, a specific number of **reference nucleotide and peptide sequences from NPCLs provided by UPrimer** (depending on which NPCLs and how many were captured by the user) can be used as guide sequences. The working principle of this script is roughly as follows: First, **TBLASTN** (e-value < 1e-5, identity > 50%) was performed to identify orthologous contigs based on the reference peptide sequences. Then, a reversed **BLASTN** (e-value < 1e-5, identity > 50%) was performed on the identified orthologous contigs against the reference nucleotide sequence to detect potential chimeras. As the orthologous contigs contained flanking sequences of the target regions, **EXONERATE version 2.4.0**  was employed to identify potential intron-exon boundaries based on the reference protein sequence of each target NPCL. Finally, this script combines all identified orthologous exons from all samples, constructing orthologous sequence groups (OGs) at both the DNA and protein levels.
+To extract target NPCL sequences from the assembled contigs, a specific number of **reference nucleotide and peptide sequences from NPCLs provided by UPrimer** (depending on which NPCLs and how many were captured by the user) can be used as guide sequences. The working principle of this script is roughly as follows: First, **TBLASTN** (e-value < 1e-5, identity > 50%) was performed to identify orthologous contigs based on the reference peptide sequences. Then, a reversed **BLASTN** (e-value < 1e-5, identity > 50%) was performed on the identified orthologous contigs against the reference nucleotide sequence to detect potential chimeras. As the orthologous contigs contained flanking sequences of the target regions, **EXONERATE**  was employed to identify potential intron-exon boundaries based on the reference protein sequence of each target NPCL. Finally, this script combines all identified orthologous exons from all samples, constructing orthologous sequence groups (OGs) at both the DNA and protein levels.
 
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/1a4ce2c6-ad7e-46b1-8b72-4fa95c4279e1" alt="Drawing" width="700" height="400"/>
@@ -539,26 +553,26 @@ To extract target NPCL sequences from the assembled contigs, a specific number o
 
 
 ## Inputs 
-The user should begin by creating a new folder (e.g., Amplicon_capture_data_analysis) and placing the python script inside it. Additionally, the user need to prepare three data folders to store the respective data files. The details are as follows:
+The user should begin by creating a new folder (e.g., Amplicon_capture_data_analysis) and placing the python script inside it. Additionally, the user needs to prepare three data folders to store the respective data files. The details are as follows:
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/962516c4-e8ed-4517-a72d-911460e8eff3" alt="Drawing" width="500" height="130"/>
   </div>
 <br /><br />
 
-(1) **The folder "contigs"**: it contains the assembled contigs files for all captured samples. The contigs files should be named according to the following format: 'sampleID.fasta', for example: 'LepSample1.fasta', 'LepSample2.fasta'. Please ensure that the filenames only consist of the sample ID without any additional characters such as "_" or "|".
+(1) **The folder "contigs"**: This folder contains the assembled contig files for all captured samples. These contig files should be named according to the following format: 'sampleID.fasta', for example: 'LepSample1.fasta', 'LepSample2.fasta'. Please ensure that the filenames only consist of the sample ID without any additional characters such as "_" or "|".
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/687ff7b7-567a-4297-9287-885de2d6d167" alt="Drawing" width="500" height="400"/>
   </div>
 <br /><br />
 
-(2) **The folder "reference"**: it contains the reference nucleotide (named "ref_nuc.fasta") and peptide sequence (named "ref_pro.fasta") files for the target capture regions. These two sequence files are subsets of "Reference nucleotide sequences.fasta" and "Reference peptide sequences.fasta" generated by UPrimer. The user can select the target NPCLs from the above two files based on the actual captured region's NPCL ID.
+(2) **The folder "reference"**: This folder contains the reference nucleotide (named ***"ref_nuc.fasta"***) and peptide sequence (named ***"ref_pro.fasta"***) files for the target capture regions. These two sequence files are subsets of "Reference nucleotide sequences.fasta" and "Reference peptide sequences.fasta" generated by UPrimer. The user can select the target NPCLs from the above two files based on the actual captured region's NPCL ID.
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/d7556af7-0450-4c73-b8ae-bb92518482e3" alt="Drawing" width="800" height="350"/>
   </div>
 <br /><br />
 
   
-(3) **The folder "pep_for_exonerate"**: it contains the reference peptide sequences file for the target capture regions. This file is identical to the reference peptide sequence file in the "reference" folder.
+(3) **The folder "pep_for_exonerate"**: This folder contains the reference peptide sequences file for the target capture regions. This file is identical to the reference peptide sequence file in the folder "reference".
  
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/72c3ed10-b0dc-4fb6-923e-fdd4d23b630c" alt="Drawing" width="500" height="380"/>
@@ -566,7 +580,7 @@ The user should begin by creating a new folder (e.g., Amplicon_capture_data_anal
 <br /><br />  
 
 ## Outputs
-The final orthologous sequence (OG) files can be found in the **'6.Final_seq_for_align'** folder. These files can be used directly for subsequent **sequence alignment and phylogenetic analysis**.
+The final orthologous sequence (OG) files can be found in the folder **'6.Final_seq_for_align'**. These files can be used directly for subsequent **sequence alignment and phylogenetic analysis**.
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/c2596d94-375b-4f51-9f06-69fd5b421f9f" alt="Drawing" width="800" height="250"/>
   </div>
@@ -579,7 +593,7 @@ The final orthologous sequence (OG) files can be found in the **'6.Final_seq_for
 
 Assuming we captured ***100 NPCLs*** (NPCL ID: Lep1-Lep100) from ***six Lepidoptera samples*** (sample ID: LepSample1-LepSample6), and we have obtained the contigs (in our case, these contigs were assembled using **metaSPAdes**, detailed methods can be found in our paper) for these six samples. The process of extracting orthologous sequence groups from these assembled contigs is as follows:
 
-**Step 1-Prepare reference sequence files** 
+**Step 1——Prepare reference sequence files** 
 
 From the *"Reference nucleotide sequences.fasta" and "Reference peptide sequences.fasta"* files outputted by UPrimer, extract the nucleotide sequences and protein sequences corresponding to Lep1~Lep100. Rename the extracted nucleotide sequence file as ***"ref_nuc.fasta"*** and the extracted protein sequence file as ***"ref_pro.fasta"***.
 
@@ -588,29 +602,31 @@ From the *"Reference nucleotide sequences.fasta" and "Reference peptide sequence
   </div>
 <br /><br />
 
-**Step 2-Prepare input files** 
+**Step 2——Prepare input files** 
 
-Create a new folder named "Lep_amplicon_data_analysis". Within this folder, create three new folders named "contigs", "reference", and "pep_for_exonerate".
+Created a new folder named "Lep_amplicon_data_analysis". The script 'Extract_orthologous_sequence_groups_from_assembled_contigs.py' for extracting OGs should be placed within this new folder. Then, three new folders have been created: "contigs", "reference", and "pep_for_exonerate".
 
 - In the "contigs" folder, place the contigs FASTA files for the six Lepidoptera samples. Ensure that the file names follow the format: SampleID.fasta, without the use of "_" and "|".
 - In the "reference" folder, place the prepared "ref_nuc.fasta" and "ref_pro.fasta" files from Step 1.
 - In the "pep_for_exonerate" folder, place the "ref_pro.fasta" file from Step 1.
-- Additionally, the script 'Extract_orthologous_sequence_groups_from_assembled_contigs.py' for extracting OGs should also be placed within the "Lep_amplicon_data_analysis" folder.
+
 
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/90d31593-fbbf-4a27-b9c1-0384215e37bd" alt="Drawing" width="500" height="320"/>
   </div>
 <br /><br />
 
-**Step 3-Run the script** 
+**Step 3——Run the script** 
 
 ~~~
 conda activate UPrimer
-cd /my/complete/path/to/Lep_amplicon_data_analysis
-python Extract_orthologous_sequence_groups_from_assembled_contigs.py -c /my/complete/path/to/Lep_amplicon_data_analysis/contigs
+cd /path/to/UPrimer/Accessory
+unzip Test_data_for_extracting_OGs_from_assembled_contigs.zip
+cd /path/to/Lep_amplicon_data_analysis
+python Extract_orthologous_sequence_groups_from_assembled_contigs.py -c /path/to/Lep_amplicon_data_analysis/contigs
 ~~~
 
-**Step 4-Collect the extracted OGs from the output folder '6.Final_seq_for_align' and proceed with the subsequent bioinformatic steps** 
+**Step 4——Collect the extracted OGs from the output folder '6.Final_seq_for_align' and proceed with the subsequent bioinformatic steps** 
 
 ### FAQ
 Contact us if you have any questions
