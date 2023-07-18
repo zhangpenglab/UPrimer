@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/73507779/223490314-5084f3e0-e695-4acc-a513-b36d35d8e630.png" alt="Drawing" width="200"/>
+<img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/fdf593c8-9f75-48a1-8136-29b9e30f2631" alt="Drawing" width="200"/>
 </p>
 
 
