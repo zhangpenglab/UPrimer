@@ -323,7 +323,7 @@ ncbi-genome-download all --section refseq --formats genbank -A GCF_014905235.1 -
 
 (2) Extract exome data from the genome annotation GenBank file for the referecne sepecies *Bombyx mori*:
 <br /><br />
-**CAUSION**: The exome of the reference species cannot be directly downloaded through the ncbi-genome-download tool. To resolve this issue, we provide a custom script named **"Extract_exome_from_genbank_file.py"** (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) that can extract exome data from the annotation GB file. Commands as below: 
+**CAUSION**: The exome of the reference species cannot be directly downloaded through the ncbi-genome-download tool. To resolve this issue, we provide a custom script named **"Extract_exome_from_genbank_file.py"** (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) that can extract exome data from the annotation 'gbff' file. Commands as below: 
 
 ~~~
 cp /path/to/UPrimer-main/Accessory/Extract_exome_from_genbank_file.py /path/to/Reference
@@ -333,7 +333,7 @@ cp GCF_014905235.1_Bmori_2016v1.0_genomic.gbff ./gbff
 python Extract_exome_from_genbank_file.py
 ~~~
 
-The extracted exon FASTA file of the reference species *Bombyx mori* is like this:
+The extracted exome FASTA file of the reference species *Bombyx mori* is like this:
   <div align="center">
     <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/cdeb5083-9eb6-47e3-9539-4eab30926356" alt="Drawing" width="780" height="400"/>
   </div>    
