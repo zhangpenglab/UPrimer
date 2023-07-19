@@ -321,8 +321,9 @@ ncbi-genome-download all --section refseq --formats protein-fasta -A GCF_0149052
 ncbi-genome-download all --section refseq --formats genbank -A GCF_014905235.1 --flat-output -o /path/to/Reference -r 100
 ~~~
 
-(2) Extract exome data from the genome annotation GB file for the referecne sepecies *Bombyx mori*:
-**CAUSION**: the exome of the reference can not be directly downloaded through the ncbi-genome-download tool, so we need to use a custome script named **Extract_exome_from_genbank_file.py** (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) to extract exome data from the annotation GB file. Commands as below: 
+(2) Extract exome data from the genome annotation GenBank file for the referecne sepecies *Bombyx mori*:
+<br /><br />
+**CAUSION**: The exome of the reference species cannot be directly downloaded through the ncbi-genome-download tool. To resolve this issue, we provide a custom script named **"Extract_exome_from_genbank_file.py"** (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) that can extract exome data from the annotation GB file. Commands as below: 
 
 ~~~
 cp /path/to/UPrimer-main/Accessory/Extract_exome_from_genbank_file.py /path/to/Reference
@@ -338,6 +339,7 @@ The extracted exon FASTA file of the reference species *Bombyx mori* is like thi
   </div>    
 <br /><br />
 
+###NOTE: The user 
 (3) Download genome sequence data based on the accession numbers of the ingroup species *Plutella xylostella* (GCA_932276165.1) and *Aricia agestis* (GCA_905147365.1):
 
 ~~~
@@ -353,7 +355,7 @@ ncbi-genome-download all --section genbank --formats cds-fasta -A GCF_000002335.
 ...
 ~~~
 
-***###NOTE：After completing the download of genome data through the NCBI genome database, users only need to unzip all files and rename them according to UPrimer's requirements (see [Input](#input)). There is no need to modify the sequence ID or description information. Please pay attention to this point.***
+***###NOTE：After completing the download of genome data through the NCBI genome database, the user only needs to unzip all files and rename them according to UPrimer's requirements (see [Input](#input)). There is no need to modify the sequence ID or description information. Please pay attention to this point.***
 
 ---
 
@@ -472,7 +474,7 @@ The user should begin by creating a new folder (e.g., XXX_universal_primer_devel
   </div>
   <br /><br />
 
-- **Candidate_nested-PCR_primer_set_PIdXXX_numXXX_mlenXXX.xls**: If PCR amplification using the highest-scoring primer pair fails, users can explore other candidate primers listed in the table. Each MSA provides ten candidate nested PCR primer pairs. These candidate primers are sorted based on their total scores, and the author can try them sequentially, one by one, to identify a successful amplification.
+- **Candidate_nested-PCR_primer_set_PIdXXX_numXXX_mlenXXX.xls**: If PCR amplification using the highest-scoring primer pair fails, the user can explore other candidate primers listed in the table. Each MSA provides ten candidate nested PCR primer pairs. These candidate primers are sorted based on their total scores, and the author can try them sequentially, one by one, to identify a successful amplification.
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/62d3b994-e110-4d30-b766-8e4e05fb57a4" alt="Drawing" width="920" height="350"/>
   </div>
@@ -519,7 +521,7 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 **Step 4**: Prepare UPrimer input files (see [Input](#input)). We need to start by creating a new folder, which can be named "Lepidoptera_NPCL_primer_development." Inside this new folder, we should first place the UPrimer program package. Then, we need to prepare a text file. The text file should be named "species_list.txt", and it should contain the species names of the reference, ingroup, and outgroup species. Its purpose is to ask UPrimer about the selected reference, ingroup, and outgroup species. In this text table, only species names are displayed, and spaces in the names are replaced with underscores. Finally, we need to prepare three folders, named "Reference," "Ingroups," and "Outgroups". The "Reference" folder contains exonome, genome, and proteome data of the reference species. The "Ingroups" folder contains genome data of all ingroup species and the "Outgroups" folder contains CDS data of all outgroup species. The FASTA data of all species in these three folders need to be labeled with the suffixes "_exon," "_pep," "_genome," and "_cds" to indicate their respective types. 
 <br /><br />
 
-**To help users better understand the workflow of UPrimer, we have provided test data for this case in the *"Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide users on how to use UPrimer for designing NPCL primers effectively. The test data files are as shown in the following figure:**
+**To help the user better understand the workflow of UPrimer, we have provided test data for this case in the *"Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip"* file, which can be accessed at https://github.com/zhangpenglab/UPrimer/. Please note that the test genome data for Lepidoptera has been reduced in size for the purpose of guide the user on how to use UPrimer for designing NPCL primers effectively. The test data files are as shown in the following figure:**
   <div align="center">
      <img src="https://github.com/zhangpenglab/UPrimer/assets/139540726/f522bfca-39a8-426a-b019-eca403737242" alt="Drawing" width="950" height="700"/>
   </div>
