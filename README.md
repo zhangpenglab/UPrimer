@@ -525,7 +525,7 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 conda activate UPrimer
 cd /path/to/UPrimer-main
 unzip Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip
-cd /path/to/Example/Lepidoptera_NPCL_primer_development/UPrimer
+cd /path/to/Test_data_of_developing_NPCL_primers_for_Lepidoptera/Lepidoptera_NPCL_primer_development/UPrimer
 python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
 ~~~
 <br /><br />
