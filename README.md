@@ -58,18 +58,18 @@ git clone https://github.com/zhangpenglab/UPrimer.git
 
 (2) Install python, biopython, BLAST+, pandas, pal2nal and exonerate through conda.
 ~~~
-unzip /path/to/UPrimer.zip
-conda env create -f /path/to/UPrimer/UPrimer-conda-env.yml
+unzip /path/to/UPrimer-main.zip
+conda env create -f /path/to/UPrimer-main/UPrimer-conda-env.yml
 ~~~
 
 (3) Install megacc and put it on your PATH.
 
 ~~~
-cd /path/to/UPrimer/Accessory/
+cd /path/to/UPrimer-main/Accessory/
 tar xvfz megacc_10.1.8_amd64.tar.gz
 
 vim ~/.bashrc                                           
-export PATH=$PATH:/path/to/UPrimer/Accessory
+export PATH=$PATH:/path/to/UPrimer-main/Accessory
 source ~/.bashrc
 ~~~
 
@@ -322,7 +322,7 @@ ncbi-genome-download all --section refseq --formats genbank -A GCF_014905235.1 -
 **CAUSION**: the exome of the reference can not be directly downloaded through the ncbi-genome-download tool, so we need to use a custome script named **Extract_exome_from_genbank_file.py** (https://github.com/zhangpenglab/UPrimer/tree/main/Accessory) to extract exome data from the annotation GB file. Commands as below: 
 
 ~~~
-cp /path/to/UPrimer/Accessory/Extract_exome_from_genbank_file.py /path/to/Reference
+cp /path/to/UPrimer-main/Accessory/Extract_exome_from_genbank_file.py /path/to/Reference
 cd /path/to/Reference
 mkdir gbff
 cp GCF_014905235.1_Bmori_2016v1.0_genomic.gbff ./gbff
@@ -523,7 +523,7 @@ Assuming we are now developing a set of NPCL primers for the order Lepidoptera, 
 
 ~~~
 conda activate UPrimer
-cd /path/to/UPrimer
+cd /path/to/UPrimer-main
 unzip Test_data_of_developing_NPCL_primers_for_Lepidoptera.zip
 cd /path/to/Example/Lepidoptera_NPCL_primer_development/UPrimer
 python UPrimer.py -F species_list.txt -CO 1 -TG Lepidoptera -IT2 0.85 -AT2 0.75 -IT1 0.80 -AT1 0.70 -PId 3
@@ -620,7 +620,7 @@ Created a new folder named "Lep_amplicon_data_analysis". The script 'Extract_ort
 
 ~~~
 conda activate UPrimer
-cd /path/to/UPrimer/Accessory
+cd /path/to/UPrimer-main/Accessory
 unzip Test_data_for_extracting_OGs_from_assembled_contigs.zip
 cd /path/to/Lep_amplicon_data_analysis
 python Extract_orthologous_sequence_groups_from_assembled_contigs.py -c /path/to/Lep_amplicon_data_analysis/contigs
