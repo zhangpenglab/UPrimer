@@ -242,7 +242,9 @@ The complexity of amino acid primer sequences is determined by evaluating the am
 **@Phylogenetic informativeness: ScoreINFOR, maximum score: 100**
 
 The phylogenetic information of the amplification region is determined by the sequence variability. To convert this value into a percentage scale, UPrimer utilizes the following formula: 
-ScoreINFOR = (Infor - InforMin)/(InForMax-InForMin) * (Max_Infor_score - Min_Infor_score) + Min_Infor_score
+ScoreINFOR = (Infor - InforMin)/(InForMax-InForMin) * (Max_Infor_score - Min_Infor_score) + Min_Infor_score.
+
+
 Where:
 - **Infor** represents the phylogenetic information value of a specific amplification region, which is calculated by summing the sequence diveregence in each column of all ingroup species and the reference species. The formula for calculation is as follows: InforSelf = D1 + D2 + D3 + ... + Dn. Here, n represents the length of the amplification region (i.e., the number of column positions). Dn represents the amino acid divergence of all ingroup species and the reference species in each column position.
 - **InforMin** represents the **lowest value** of phylogenetic information within different primer pairs' amplification regions in the same MSA.
@@ -339,7 +341,7 @@ The extracted exome FASTA file of the reference species *Bombyx mori* is like th
   </div>    
 <br /><br />
 
-###NOTE: The user 
+
 (3) Download genome sequence data based on the accession numbers of the ingroup species *Plutella xylostella* (GCA_932276165.1) and *Aricia agestis* (GCA_905147365.1):
 
 ~~~
