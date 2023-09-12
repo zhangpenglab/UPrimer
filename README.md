@@ -4,7 +4,7 @@
 
 
 
-UPrimer : a program to automatically develop nuclear protein-coding locus (NPCL) amplification primers from genome data for amplicon capture phylogenomics
+UPrimer: A Clade-Specific Primer Design Program Based on Nested PCR Strategy and Its Applications in Amplicon Capture Phylogenomics
 =================
 Jiaxuan Li, Guangcheng Han, Xiao Tian, Dan Liang*, Peng Zhang*<br>
 *State Key Laboratory of Biocontrol, School of Life Sciences, Sun Yat-Sen University, Guangzhou, China*
