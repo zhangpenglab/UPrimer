@@ -3,14 +3,17 @@
 </p>
 
 
-
 UPrimer: A Clade-Specific Primer Design Program Based on Nested PCR Strategy and Its Applications in Amplicon Capture Phylogenomics
 =================
 Jiaxuan Li, Guangcheng Han, Xiao Tian, Dan Liang*, Peng Zhang*<br>
 *State Key Laboratory of Biocontrol, School of Life Sciences, Sun Yat-Sen University, Guangzhou, China*
 
 
+## Citation
+Jiaxuan Li, Guangcheng Han, Xiao Tian, Dan Liang*, Peng Zhang*. 2023. UPrimer: A Clade-Specific Primer Design Program Based on Nested PCR Strategy and Its Applications in Amplicon Capture Phylogenomics. Molecular Biology and Evolution. DOI: 10.1093/molbev/msad230
+
 <div class="page-break"></div>
+
 
 # Table of content
 
